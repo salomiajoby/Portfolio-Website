@@ -77,8 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
         // Get form data
         const formData = new FormData(this);
         const name = formData.get('name');
@@ -88,18 +86,22 @@ if (contactForm) {
         
         // Basic validation
         if (!name || !email || !subject || !message) {
+            e.preventDefault();
             showNotification('Please fill in all fields', 'error');
             return;
         }
         
         if (!isValidEmail(email)) {
+            e.preventDefault();
             showNotification('Please enter a valid email address', 'error');
             return;
         }
         
-        // Simulate form submission (replace with actual form handling)
-        showNotification('Thank you! Your message has been sent successfully.', 'success');
-        this.reset();
+        // Show loading message
+        showNotification('Sending your message...', 'info');
+        
+        // Form will be submitted to Formspree automatically
+        // Formspree will handle the email sending
     });
 }
 
@@ -132,11 +134,11 @@ function showNotification(message, type = 'info') {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        background: ${type === 'success' ? '#80744A' : type === 'error' ? '#f44336' : '#D4BFA0'};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 12px rgba(128, 116, 74, 0.2);
         z-index: 10000;
         transform: translateX(100%);
         transition: transform 0.3s ease;
